@@ -1,43 +1,70 @@
 package org.example;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class MusicPlayer {
-    private Music music;
-    private String name;
-    private List<Music> musicList = new ArrayList<>();
+    @Component
+    public class MusicPlayer {
 
-    public String getName() {
-        return name;
-    }
+        @Value("${musicPlayer.name}")
+        private String name;
+        @Value("${musicPlayer.volume}")
+        private int volume;
 
-    public void setName(String name) {
-        this.name = name;
-    }
+        public String getName() {
+            return name;
+        }
 
-    public int getVolume() {
-        return volume;
-    }
+        public int getVolume() {
+            return volume;
+        }
 
-    public void setVolume(int volume) {
-        this.volume = volume;
-    }
 
-    private int volume;
 
-    public MusicPlayer(){}
+        @Autowired
+        @Qualifier("classicalMusic")
+        private Music music;
 
-    public MusicPlayer(Music music){
-        this.music = music;
-    }
+        private ClassicalMusic classicalMusic;//bean classical
+        private RockMusic rockMusic;
 
-    public void setMusic(Music music){
-    this.music = music;
-    }
+//        private Music music;//bean interface music
 
-    public void playMusic(){
-        System.out.println("Playing "+ music.getSong());
-    }
+//    @Autowired
+//    public MusicPlayer(ClassicalMusic classicalMusic){
+//        this.classicalMusic = classicalMusic;
+//    }
+
+//    @Autowired
+//    public MusicPlayer(Music music){//we can use the 1 variant of implements injections
+//        this.music = music;
+//    }
+//or
+
+//        @Autowired
+//        public void setMusic(Music music){ //we can use the 2 variant of implements injections
+//            this.music = music;
+//        }
+//    @Autowired
+//    public MusicPlayer(ClassicalMusic classicalMusic, RockMusic rockMusic){ //we can use the 3 variant of implements injections
+//        this.classicalMusic = classicalMusic;
+//        this.rockMusic = rockMusic;
+//    }
+//
+//
+//    public String playMusic(){
+//       return "Playing "+ classicalMusic.getSong();
+//        System.out.println("Playing "+ rockMusic.getSong());
+//    }
+
+        public String playMusic(){
+            return "Playing "+ music.getSong();
+
+        }
 
 }
